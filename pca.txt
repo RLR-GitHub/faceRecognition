@@ -1,0 +1,41 @@
+//============================================================================
+// PCA
+//============================================================================
+
+Let X = { x_1, x_2, ..., x_n } be a random vector of observations
+(faces whose pixel values have been vectorized)
+
+1) Compute the mean (mu)
+
+mu = ( 1 / n ) * summation of (x_i) from i[1,n]
+
+2) Compute the Covariance Matrix S
+
+S = ( 1 / n ) * summation of (x_i - mu) *( x_i - mu )^( T) from i[1,n]
+( T for transposed)
+
+3) Compute the eigenvalues lambda_i and eigenvectors v_i of S
+
+S * v_i = lambda_i * v_i for i[1,n]
+
+4) Order the eigenvectors descending by their eigenvalye.
+
+The k principal components are the eigenvectors corresponding to
+the k largest eigenvalues.
+
+The k principal components of the observed vector x are then given by:
+
+y = W^( T ) ( x - mu )
+
+where W = ( v_1, v_2, ...,
+
+
+
+//======
+
+// predict the label of given test image:
+// int facePredicted = eigenFaceRec->predict(testSample);
+// get confidence and label by
+// eigenFaceRec->predict( testSample, int predict, double confidence )
+
+//=======

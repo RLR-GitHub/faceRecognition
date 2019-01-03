@@ -1,0 +1,68 @@
+//==============================================================
+// LEAST DISTANCE SQUARED METHODS
+//==============================================================
+
+long FaceRec::lds(cv::Mat img_1, cv::Mat img_2)
+{
+    cv::Vec3b intensity1;
+    cv::Vec3b intensity2;
+
+    uchar pixR;
+    uchar pixG;
+    uchar pixB;
+
+    uchar pixSum1 = 0;
+    uchar pixSum2 = 0;
+
+    long diffRPixs[150*150];
+    long diffGPixs[150*150];
+    long diffBPixs[150*150];
+    long diff = 0;
+
+    for ( int r = 0; r < 150; r ++ )
+    {
+        for ( int c = 0; c < 150; c ++ )
+        {
+            pixR = img_1.at<cv::Vec3b>(r,c).val[0];
+            pixG = img_1.at<cv::Vec3b>(r,c).val[1];
+            pixB = img_1.at<cv::Vec3b>(r,c).val[2];
+
+            pixR = img_2.at<cv::Vec3b>(r,c).val[0];
+            pixG = img_2.at<cv::Vec3b>(r,c).val[1];
+            pixB = img_2.at<cv::Vec3b>(r,c).val[2];
+
+            diffRPixs[r*150 + c] = img_1.at<cv::Vec3b>(r,c).val[0] - img_2.at<cv::Vec3b>(r,c).val[0];
+            diffGPixs[r*150 + c] = img_1.at<cv::Vec3b>(r,c).val[1] - img_2.at<cv::Vec3b>(r,c).val[1];
+            diffBPixs[r*150 + c] = img_1.at<cv::Vec3b>(r,c).val[2] - img_2.at<cv::Vec3b>(r,c).val[2];
+        }
+    }
+    for ( int i = 0; i < 150*150; i++ )
+    {
+        diff = sqrt(diffRPixs[i] * diffRPixs[i]) + sqrt(diffGPixs[i] * diffGPixs[i]) + sqrt(diffBPixs[i] * diffBPixs[i]) + diff;
+    }
+
+    /*for ( int r = 0; r < img_1.rows; r ++ )
+    {
+        for ( int c = 0; c < img_1.cols; c ++ )
+        {
+            //intensity2 = img_2.at<cv::Vec3b>(r,c);
+            pixR = img_1.at<cv::Vec3b>(r,c).val[0];
+            pixG = img_1.at<cv::Vec3b>(r,c).val[1];
+            pixB = img_1.at<cv::Vec3b>(r,c).val[2];
+            pixSum1 = pixR + pixG + pixB + pixSum1;
+        }
+    }
+
+    for ( int r = 0; r < img_2.rows; r ++ )
+    {
+        for ( int c = 0; c < img_2.cols; c ++ )
+        {
+            //intensity2 = img_2.at<cv::Vec3b>(r,c);
+            pixR = img_2.at<cv::Vec3b>(r,c).val[0];
+            pixG = img_2.at<cv::Vec3b>(r,c).val[1];
+            pixB = img_2.at<cv::Vec3b>(r,c).val[2];
+            pixSum2 = pixR + pixG + pixB + pixSum2;
+        }
+    }*/
+    return diff;//((pixSum1 - pixSum2) * (pixSum1 - pixSum2));
+}
